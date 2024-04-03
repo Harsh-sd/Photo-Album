@@ -1,11 +1,17 @@
 
 const Album=require("../models/album");
 
-const Photo=require("../models/photo")
+const Photo=require("../models/photo");
+// localhost:3000/album/?page=1
 exports.getAlbum=async(req,res,next)=> {
   try {
-    const allAlbum=await Album.find();
-    res.status(200).send({message:"All Albums fetched successfully" , album:allAlbum})
+    const page=req.query.page ||1;
+    const perpage=5;
+    let totalItems;
+    totalItems=await Album.countDocuments();
+    const allAlbum=await Album.find().skip((page-1)*perpage).limit(perpage);
+    res.status(200).send({message:"All Albums fetched successfully" , album:allAlbum,totalPages: totalItems,
+    currentPage: page})
   } catch (error) {
     res.status(500).send({message:"Internal Server error"});
     console.log(error);
