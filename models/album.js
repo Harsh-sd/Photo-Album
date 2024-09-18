@@ -11,12 +11,13 @@ const albumSchema=new Schema ({
 type:Schema.Types.ObjectId,
 ref:"photo"
     }],
+    
     coverPhoto: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Photo" // Reference to the photo model
     },
     createdBy: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "user" // Reference to the User model
     },
     
