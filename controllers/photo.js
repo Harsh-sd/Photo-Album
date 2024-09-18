@@ -15,11 +15,14 @@ exports.addPhoto= async (req,res,next)=> {
     try {
         const title=req.body.title;
 const description=req.body.description;
-const location=req.file;
+
 const tags=req.body.tags;
 if(!req.file){
 return res.status(422).send({message:"Image is not found"});
 }
+if (!title || !description) {
+    return res.status(400).send({ message: "Title and description are required" });
+  }
 
 const photo=new Photo({
      title: title,
@@ -40,7 +43,7 @@ exports.editPhoto=async(req,res,next)=> {
     try {
         const title=req.body.title;
 const description=req.body.description;
-const location=req.file;
+
 const tags=req.body.tags;
 const photoId=req.params.photoId;
 const existPhoto=await Photo.findById(photoId);
@@ -64,7 +67,7 @@ res.status(201).send({message:"photo edited successfully"  , photo:savedPhoto}  
     }
 };
 
-exports.deletePhoto= async(req,res,next)=> {
+exports.deletePhoto= async(req,res)=> {
     try {
         const photoId=req.params.photoId;
 const existPhoto=await Photo.findByIdAndDelete(photoId);

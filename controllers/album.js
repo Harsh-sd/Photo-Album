@@ -22,7 +22,7 @@ try {
     const title=req.body.title;
     const description=req.body.description;
     
-    const createdBy=req.user._id;
+    const createdBy=req.id;
     const album=new Album({
         title:title,
         description:description,
@@ -44,7 +44,7 @@ exports.editAlbum=async (req,res,next)=> {
        
         const albumId=req.params.albumId;
         
-        const userId=req.user._id;
+        const userId=req.id;
         const existAlbum=await Album.findById(albumId);
          //If the userId are not same
         if (String(existAlbum.createdBy) !== String(userId)) {
@@ -64,7 +64,7 @@ exports.editAlbum=async (req,res,next)=> {
 exports.deleteAlbum=async(req,res,next)=> {
     try {
         const albumId=req.params.albumId;
-        const userId=req.user._id;
+        const userId=req.id;
         const existAlbum=await Album.findByIdAndDelete(albumId);
         //If the userId are not same
         if (String(existAlbum.createdBy) !== String(userId)) {

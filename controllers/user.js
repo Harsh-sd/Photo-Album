@@ -50,7 +50,7 @@ exports.login=async(req,res,next)=> {
     res.status(422).send({message:"password does not matched"});
 
   }
-  const token= jwt.sign( {email:user.email , userId:user._id} , "generatetoken" ,{ expiresIn: "1y" });
+  const token= jwt.sign( { userId:user._id} , "generatetoken" ,{ expiresIn: "1y" });
   res.status(200).send({message:"user login successfully" ,token:token});
     } catch (error) {
         res.status(500).send({message:"Internal server error" });
