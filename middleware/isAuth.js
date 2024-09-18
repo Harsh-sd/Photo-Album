@@ -5,9 +5,9 @@ if(!token){
     res.status(422).send({message:"token does not found"});
 }
 try {
-    const decode=jwt.verify(token , "generatetoken" );
+    const decodetoken=jwt.verify(token , "generatetoken" );
 
-    req.user=decode;
+    req.id=decodetoken.userId;
     next();
 
 } catch (error) {
